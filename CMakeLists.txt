@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.12)
 project(range VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+#conan_basic_setup()
 
-#find_package(range-v3)
+find_package(range-v3)
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
