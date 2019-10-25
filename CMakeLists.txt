@@ -4,7 +4,7 @@ project(range VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-find_package(Range-v3 REQUIRED)
+find_package(Range-v3)
 
 configure_file(version.h.in ${PROJECT_SOURCE_DIR}/version.h)
 
