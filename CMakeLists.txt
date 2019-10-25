@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(range VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-#conan_basic_setup()
+execute_process(COMMAND source conan_install.sh)
 
 find_package(range-v3)
 
