@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
 
-#execute_process(COMMAND bash "conan install ~/cpp_otus/range") 
-
 project(range VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 add_definitions("-std=c++17")
 
