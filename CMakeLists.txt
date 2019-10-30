@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(range VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+execute_process(COMMAND bash "conan install . --build=missing -s compiler.libcxx=libstdc++11")
 
-execute_process(COMMAND source conan_install.sh)
+project(range VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 
 find_package(range-v3)
 

@@ -7,20 +7,17 @@
 #include <vector>
 #include <algorithm>
 
-void filter(int firstByte, std::vector<strVector> &pool)
+void filter(int firstByte, std::vector<intVector> &pool)
 {
-      std::string str = std::to_string(firstByte);
-      ranges::for_each(pool | ranges::view::filter([=](strVector tmp) { return tmp.at(0) == str; }),
-                     [](strVector tmp) { writeIpToConsole(tmp); });
+      ranges::for_each(pool | ranges::view::filter([=](intVector tmp) { return tmp.at(0) == firstByte; }),
+                     [](intVector tmp) { writeIpToConsole(tmp); });
 }
 
-void filter(int firstByte, int secondByte, std::vector<strVector> &pool)
+void filter(int firstByte, int secondByte, std::vector<intVector> &pool)
 {
-    std::string str = std::to_string(firstByte);
-    std::string str2 = std::to_string(secondByte);
-    ranges::for_each(pool | ranges::view::filter([=](strVector tmp) { return tmp.at(0) == str
-                                                                          && tmp.at(1) == str2; }),
-                      [](strVector tmp) { writeIpToConsole(tmp); });
+    ranges::for_each(pool | ranges::view::filter([=](intVector tmp) { return tmp.at(0) == firstByte
+                                                                          && tmp.at(1) == secondByte; }),
+                      [](intVector tmp) { writeIpToConsole(tmp); });
 }
 
 template<typename... Args>
@@ -35,10 +32,11 @@ int main()
     {
         std::vector<strVector> ip_pool;
         readAllPool(ip_pool);
-        reverseIpSort(ip_pool);
-        filterWrapper(1, ip_pool);
-        filterWrapper(46, 70, ip_pool);
-        filterAny(46, ip_pool);
+        poolInt = initializeIpPoolInt(ip_pool);
+        reverseIpSort(poolInt);
+        filterWrapper(1, poolInt);
+        filterWrapper(46, 70, poolInt);
+        filterAny(46, poolInt);
     }
     catch(const std::exception &e)
     {
