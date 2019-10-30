@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.12)
 
-execute_process(COMMAND bash "conan install . --build=missing -s compiler.libcxx=libstdc++11")
+#execute_process(COMMAND bash "conan install ~/cpp_otus/range") 
 
 project(range VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+add_definitions("-std=c++17")
 
-find_package(range-v3)
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
+#find_package(range-v3)
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
@@ -32,6 +36,7 @@ set_target_properties(test_version PROPERTIES
 target_link_libraries(range
 	range_lib 
         filter_lib
+	${CONAN_LIBS}
 )
 
 target_link_libraries(test_version
