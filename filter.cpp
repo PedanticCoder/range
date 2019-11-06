@@ -19,7 +19,7 @@ std::vector<std::string> split(const std::string &str, char d)
     return r;
 }
 
-void readAllPool(std::vector<strVector> &pool)
+void readAllPool(std::vector<strVectIP> &pool)
 {
     for(std::string line; std::getline(std::cin, line);)
     {
@@ -28,7 +28,7 @@ void readAllPool(std::vector<strVector> &pool)
     }
 }
 
-void writeAllPool(std::vector<strVector> &pool)
+void writeAllPool(std::vector<strVectIP> &pool)
 {
     for(std::vector<std::vector<std::string> >::const_iterator ip = pool.cbegin(); ip != pool.cend(); ++ip)
     {
@@ -45,7 +45,7 @@ void writeAllPool(std::vector<strVector> &pool)
     }
 }
 
-void writeAllPoolIP(std::vector<intVector> &pool)
+void writeAllPoolIP(std::vector<intVectIP> &pool)
 {
     for(std::vector<std::vector<int> >::const_iterator ip = pool.cbegin(); ip != pool.cend(); ++ip)
     {
@@ -61,7 +61,7 @@ void writeAllPoolIP(std::vector<intVector> &pool)
     }
 }
 
-std::vector<intVector> initializeIpPoolInt(std::vector<strVector> &pool)
+std::vector<intVectIP> initializeIpPoolInt(std::vector<strVectIP> &pool)
 {
    poolInt.reserve(pool.size());
    std::vector<int> num(4);
@@ -76,7 +76,7 @@ std::vector<intVector> initializeIpPoolInt(std::vector<strVector> &pool)
    return poolInt;
 }
 
-void writeIpToConsole(intVector& tmp)
+void writeIpToConsole(intVectIP& tmp)
 {
     std::cout << tmp.at(0) << "."
               << tmp.at(1) << "."
@@ -84,42 +84,50 @@ void writeIpToConsole(intVector& tmp)
               << tmp.at(3) << std::endl;
 }
 
-void filterAny(uint8_t anyByte, std::vector<intVector> &pool)
+void filterAny(uint8_t anyByte, std::vector<intVectIP> &pool)
 {
-    ranges::for_each(pool | ranges::view::filter([=](intVector tmp) { return tmp.at(0) == anyByte ||
-                                                                             tmp.at(1) == anyByte ||
-                                                                             tmp.at(2) == anyByte ||
-                                                                             tmp.at(3) == anyByte; }),
-                     [](intVector tmp) { writeIpToConsole(tmp); });
+    ranges::for_each(pool | ranges::view::filter([=](intVectIP tmp) {
+                           return (std::any_of(tmp.begin(), tmp.end(), [=] (int tmp) {
+                                return (tmp == anyByte);
+                           })); }),
+                                [](intVectIP tmp) { writeIpToConsole(tmp); });
 }
 
-void reverseIpSort(std::vector<intVector> &pool)
+void reverseIpSort(std::vector<intVectIP> &pool)
 {
     ranges::sort(pool,
-                 [](intVector tmp, intVector tmp2)  {
-                     if(tmp.at(0) > tmp2.at(0))
+                 [](intVectIP tmp, intVectIP tmp2)  {
+                     if(tmp > tmp2)
                         return true;
-                    else if((tmp.at(0) == tmp2.at(0))
-                            && (tmp.at(1) > tmp2.at(1)))
-                    {
-                        return true;
-                    }
-                    else if((tmp.at(1) == tmp2.at(1))
-                            && (tmp.at(2) > tmp2.at(2)))
-                    {
-                        return true;
-                    }
-                    else if((tmp.at(2) == tmp2.at(2))
-                            && (tmp.at(3) > tmp2.at(3)))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-		});
+                 });
         writeAllPoolIP(pool);
 }
+
+void filterModified(intVectIP &partIpPool, std::vector<intVectIP> &pool)
+{
+    ranges::for_each(pool,
+                      [=](intVectIP tmp)
+                       {
+                           if (partIpPool.size()==3 && tmp.at(0)==partIpPool.at(1)
+                                                    && tmp.at(1)==partIpPool.at(2))
+                                writeIpToConsole(tmp);
+
+                           if (partIpPool.size()==1 && tmp.at(0)==partIpPool.at(0))
+                                writeIpToConsole(tmp);
+                       });
+}
+
+//void filter(int firstByte, std::vector<intVectIP> &pool)
+//{
+//      ranges::for_each(pool | ranges::view::filter([=](intVectIP tmp) { return tmp.at(0) == firstByte; }),
+//                     [](intVectIP tmp) { writeIpToConsole(tmp); });
+//}
+
+//void filter(int firstByte, int secondByte, std::vector<intVectIP> &pool)
+//{
+//    ranges::for_each(pool | ranges::view::filter([=](intVectIP tmp) { return tmp.at(0) == firstByte
+//                                                                          && tmp.at(1) == secondByte; }),
+//                      [](intVectIP tmp) { writeIpToConsole(tmp); });
+//}
 
 

@@ -6,25 +6,30 @@
 
 #include <range/v3/all.hpp>
 
-using strVector = std::vector<std::string>;
-using intVector = std::vector<int>;
+using strVectIP = std::vector<std::string>;
+using intVectIP = std::vector<int>;
 
-static std::vector<intVector> poolInt;
+static std::vector<intVectIP> poolInt;
+static intVectIP partIpPool;
+
+static intVectIP partPoolVar;
 
 std::vector<std::string> split(const std::string &str, char d);
 
-std::vector<intVector> initializeIpPoolInt(std::vector<strVector> &pool);
+std::vector<intVectIP> initializeIpPoolInt(std::vector<strVectIP> &pool);
 
-void readAllPool(std::vector<strVector> &pool);
+void readAllPool(std::vector<strVectIP> &pool);
 
-void writeAllPool(std::vector<strVector> &pool);
+void writeAllPool(std::vector<strVectIP> &pool);
 
-void writeAllPoolIP(std::vector<intVector> &pool);
+void writeAllPoolIP(std::vector<intVectIP> &pool);
 
-void writeIpToConsole(intVector& tmp);
+void writeIpToConsole(intVectIP& tmp);
 
-void filterAny(uint8_t anyByte, std::vector<intVector> &pool);
+void filterAny(uint8_t anyByte, std::vector<intVectIP> &pool);
 
-void reverseIpSort(std::vector<intVector> &pool);
+void reverseIpSort(std::vector<intVectIP> &pool);
+
+void filterModified(intVectIP &partIpPool, std::vector<intVectIP> &pool);
 
 
