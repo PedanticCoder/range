@@ -8,7 +8,7 @@ addons:
     - libboost-test-dev
 install:
 # Install conan
-- sudo pip install --upgrade pip
+- sudo pip install --upgrade pip --user
 - pip install conan
 # Automatic detection of your arch, compiler, etc.
 - conan user
