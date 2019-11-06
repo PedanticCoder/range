@@ -9,7 +9,7 @@ addons:
 install:
 # Install conan
 - sudo pip install --upgrade pip --user
-- pip install conan --user
+- sudo pip install conan --user
 # Automatic detection of your arch, compiler, etc.
 - conan user
 script:
