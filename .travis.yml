@@ -19,7 +19,7 @@ script:
 - cmake . -G "Unix Makefiles"
 - cmake .
 - cmake --build .
-- cmake --build . --target test
+#- cmake --build . --target test
 - cmake --build . --target package
 deploy:
   provider: script
