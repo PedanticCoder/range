@@ -63,6 +63,7 @@ void writeAllPoolIP(std::vector<intVectIP> &pool)
 
 std::vector<intVectIP> initializeIpPoolInt(std::vector<strVectIP> &pool)
 {
+   std::vector<intVectIP> poolInt;
    poolInt.reserve(pool.size());
    std::vector<int> num(4);
    for(ulong i = 0; i < pool.size(); ++i) {
@@ -95,39 +96,21 @@ void filterAny(uint8_t anyByte, std::vector<intVectIP> &pool)
 
 void reverseIpSort(std::vector<intVectIP> &pool)
 {
-    ranges::sort(pool,
-                 [](intVectIP tmp, intVectIP tmp2)  {
-                     if(tmp > tmp2)
-                        return true;
-                 });
+    ranges::sort(pool, std::greater<intVectIP>());
         writeAllPoolIP(pool);
 }
 
-void filterModified(intVectIP &partIpPool, std::vector<intVectIP> &pool)
+void filterModified(intVectIP &partIp, std::vector<intVectIP> &pool)
 {
     ranges::for_each(pool,
-                      [=](intVectIP tmp)
-                       {
-                           if (partIpPool.size()==3 && tmp.at(0)==partIpPool.at(1)
-                                                    && tmp.at(1)==partIpPool.at(2))
-                                writeIpToConsole(tmp);
-
-                           if (partIpPool.size()==1 && tmp.at(0)==partIpPool.at(0))
-                                writeIpToConsole(tmp);
-                       });
+                     [=](intVectIP tmp)
+                      {
+                          if (partIp.size()==3 &&
+                              std::equal(tmp.rbegin()+2, tmp.rend(), partIp.rbegin()))
+                                   writeIpToConsole(tmp);
+                          if (partIp.size()==1 &&
+                              std::equal(tmp.rbegin()+3, tmp.rend(), partIp.rbegin()))
+                                   writeIpToConsole(tmp);
+                      });
 }
-
-//void filter(int firstByte, std::vector<intVectIP> &pool)
-//{
-//      ranges::for_each(pool | ranges::view::filter([=](intVectIP tmp) { return tmp.at(0) == firstByte; }),
-//                     [](intVectIP tmp) { writeIpToConsole(tmp); });
-//}
-
-//void filter(int firstByte, int secondByte, std::vector<intVectIP> &pool)
-//{
-//    ranges::for_each(pool | ranges::view::filter([=](intVectIP tmp) { return tmp.at(0) == firstByte
-//                                                                          && tmp.at(1) == secondByte; }),
-//                      [](intVectIP tmp) { writeIpToConsole(tmp); });
-//}
-
 

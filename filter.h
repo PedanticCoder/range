@@ -9,11 +9,6 @@
 using strVectIP = std::vector<std::string>;
 using intVectIP = std::vector<int>;
 
-static std::vector<intVectIP> poolInt;
-static intVectIP partIpPool;
-
-static intVectIP partPoolVar;
-
 std::vector<std::string> split(const std::string &str, char d);
 
 std::vector<intVectIP> initializeIpPoolInt(std::vector<strVectIP> &pool);
@@ -30,6 +25,6 @@ void filterAny(uint8_t anyByte, std::vector<intVectIP> &pool);
 
 void reverseIpSort(std::vector<intVectIP> &pool);
 
-void filterModified(intVectIP &partIpPool, std::vector<intVectIP> &pool);
+void filterModified(intVectIP &partIp, std::vector<intVectIP> &pool);
 
 
